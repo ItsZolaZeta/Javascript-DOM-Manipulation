@@ -101,7 +101,10 @@ function renderHats(hats) {
   }
 }
 
-renderHats(hatArray);
+let accessories = [];
+accessories = hatArray
+
+renderHats(accessories);
 
 // -------------------------------------------- Filter by color -------------------------------------------- //
 
@@ -168,25 +171,25 @@ let navbar = document.querySelectorAll('.nav-link');
 for(let i = 0; i<navbar.length; i++) {
   if(navbar[i].textContent != 'Hats') {
     navbar[i].addEventListener('click', loadRemoteAccessories);
+  } else {
+    navbar[i].addEventListener('click', loadHats);
   }
-  navbar[i].addEventListener('click', loadHats);
 }
 
 function loadRemoteAccessories(e) {
   let search = e.target.textContent.toLowerCase();
   let data;
-  let accessories = [];
+  accessories = [];
 
   let request = new XMLHttpRequest();
   request.open('GET', search + '.json'); 
   request.onload = () => {
     data = JSON.parse(request.responseText);
-    console.log(data.length);
 
     //clear current displayed accessories
     let products = document.getElementById("products");
-    for(let i = 0; i<products.children.length; i++) {
-      products.children[i].style.display = "none";
+    while (products.firstChild) {
+      products.removeChild(products.firstChild);
     }
 
     //create Accessory objects
@@ -202,8 +205,9 @@ function loadRemoteAccessories(e) {
 }
 
 function loadHats(e) {
-  renderHats(hatArray);
-  addColorClass(hatArray);
+  accessories = hatArray;
+  renderHats(accessories);
+  addColorClass(accessories);
 }
 
 // -------------------------------------------- Gloves -------------------------------------------- //
@@ -224,4 +228,29 @@ function addGloveButton() {
 addGloveButton();
 
 // -------------------------------------------- Wishlist -------------------------------------------- //
+
+function addToWishlist(accessory) { 
+  accessoryJSON = JSON.stringify(accessory);
+  
+  if (sessionStorage.getItem('accessory1') == null) {
+    sessionStorage.setItem('accessory1', accessoryJSON);
+  } else {
+    if (sessionStorage.getItem('accessory2') == null){
+      sessionStorage.setItem('accessory2', accessoryJSON);
+    } else {
+      if (sessionStorage.getItem('accessory3') == null) {
+        sessionStorage.setItem('accessory3', accessoryJSON);
+      } else {
+        alert("Oops, your wishlist is full.");
+      }
+    }
+  }
+}
+
+let wishlist = document.querySelectorAll('.card-body');
+
+for(let i = 0; i<wishlist.length; i++) {
+  //console.log(accessories[i]);
+  wishlist[i].lastChild.addEventListener('click', function(){addToWishlist(accessories[i])});
+}
 
