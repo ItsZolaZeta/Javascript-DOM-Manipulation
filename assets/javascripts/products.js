@@ -200,6 +200,7 @@ function loadRemoteAccessories(e) {
 
     renderHats(accessories);
     addColorClass(accessories);
+    addWishlistListeners();
   }
   request.send(); 
 }
@@ -208,6 +209,7 @@ function loadHats(e) {
   accessories = hatArray;
   renderHats(accessories);
   addColorClass(accessories);
+  addWishlistListeners();
 }
 
 // -------------------------------------------- Gloves -------------------------------------------- //
@@ -231,7 +233,7 @@ addGloveButton();
 
 function addToWishlist(accessory) { 
   accessoryJSON = JSON.stringify(accessory);
-  
+
   if (sessionStorage.getItem('accessory1') == null) {
     sessionStorage.setItem('accessory1', accessoryJSON);
   } else {
@@ -247,10 +249,11 @@ function addToWishlist(accessory) {
   }
 }
 
-let wishlist = document.querySelectorAll('.card-body');
-
-for(let i = 0; i<wishlist.length; i++) {
-  //console.log(accessories[i]);
-  wishlist[i].lastChild.addEventListener('click', function(){addToWishlist(accessories[i])});
+function addWishlistListeners() {
+  let wishlist = document.querySelectorAll('.card-body');
+  for(let i = 0; i<wishlist.length; i++) {
+    wishlist[i].lastChild.addEventListener('click', function(){addToWishlist(accessories[i])});
+  }
 }
 
+addWishlistListeners();

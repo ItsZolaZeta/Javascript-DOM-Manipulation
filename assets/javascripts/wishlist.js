@@ -86,6 +86,12 @@ let products = document.getElementById('products');
 
 for(let i = 0; i < removeButtons.length; i++) {
   let index = i+1;
-  removeButtons[i].addEventListener('click', function() {removeFromWishlist('accessory'+index, products.children[i])});
+  removeButtons[i].addEventListener('click', function deleteElement(e) {
+    let component = e.target.parentElement.parentElement.parentElement;
+    removeFromWishlist('accessory'+index, component);
+  });
 }
+
+
+
 
