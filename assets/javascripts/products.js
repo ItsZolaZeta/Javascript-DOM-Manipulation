@@ -207,3 +207,21 @@ function loadHats(e) {
 }
 
 // -------------------------------------------- Gloves -------------------------------------------- //
+
+function addGloveButton() {
+  let navbar = document.querySelector('.navbar-nav');
+
+  let navItem = document.createElement('li');
+  navItem.setAttribute('class', 'nav-item');
+  let button = document.createElement('button');
+  button.setAttribute('class', 'nav-link btn btn-outline-secondary mr-3');
+  button.textContent = 'Gloves';
+  button.addEventListener('click', loadRemoteAccessories);
+
+  navItem.appendChild(button);
+  navbar.appendChild(navItem);
+}
+addGloveButton();
+
+// -------------------------------------------- Wishlist -------------------------------------------- //
+
